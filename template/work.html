@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<head>
+    <title>Working!</title>
+    <script src="../static/DeviceWork.js" type="text/javascript"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.0.0/chart.js"></script>
+    
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function(event){
+            DeviceManager();
+        });
+        function DeviceManager(){
+            var uname = new Array();
+            uname = {{unames|safe}}
+            var list = document.getElementById("DevicesName");
+            list.size = uname.length/2;
+            for(let i = 0; i < uname.length; i++){
+                list.appendChild(new Option(uname[i], uname[i]));
+            }
+            checkParams();
+    }
+    </script>
+
+</head>
+<body>
+    <div>
+        <div>
+            <div id="RadioPlaceholder">
+                <input type="radio" name="chart-type" value="За час" id="one_hour_radio" checked="true"/>
+                <label>За час</label>
+                <input type="radio" name="chart-type" value="За 3 часа" id="three_hours_radio"/>
+                <label>За 3 часа</label>
+                <input type="radio" name="chart-type" value="За день" id="day_radio"/>
+                <label>За день</label>
+                <input type="radio" name="chart-type" value="Как есть" id="how_it_is_radio"/>
+                <label>Как есть</label>
+                <input type="radio" name="chart-type" value="МаксМин" id="max_min_radio"/>
+                <label>Макс\Мин</label>
+            </div>
+            <div>
+                <select class="DeviceSelector" id="DevicesName" onchange="checkParams();"></select>
+                <div>
+                    <input type="datetime-local" name="start_date" id="start_date" min="{{start_date}}" max="{{end_date}}" onchange="data_is_correct();">
+                </div>
+                <div>
+                    <input type="datetime-local" name="end_date" id="end_date" min="{{start_date}}" max="{{end_date}}" onchange="data_is_correct();">
+                </div>
+                
+            </div>
+            <div>
+                <select class="DeviceSelector" id="DeviceOptionsX" onchange=""></select>
+                <select class="DeviceSelector" id="DeviceOptionsY" onchange=""></select>
+            </div>
+            <div>
+                <input type="radio" name="chart-look" value="Линейный" id="line_chart" checked="true"/>
+                <label>Линейный</label>
+                <input type="radio" name="chart-look" value="Столбчатый" id="column_chart"/>
+                <label>Столбчатый</label>
+                <input type="radio" name="chart-look" value="Точечный" id="dot_chart"/>
+                <label>Точечный</label>
+            </div>
+            <div>
+                <input type="submit" id="CreateButton" value="Создать" onclick="CreateButton();"/>
+                <input type="submit" id="ClearButton" value="Очистить" onclick="ClearButton();"  disabled="true"/>
+            </div>
+        </div>
+        <div>
+            <input type="button" id="AddButton" value="Добавить" onclick="AddButton();" >
+        </div>
+        <div id="ChartContainer">
+            <b>Chart</b>
+            <canvas id="myChart" style="width:100%;max-width:1980px"></canvas>
+        </div>
+        
+    </div>
+</body>
